@@ -1,0 +1,95 @@
+Field Injection
+=========================
+#1. Load the class by "Class.forName()"
+#2. get the field by "getDeclaredField()"
+#3. set field acceesible  true like "setAccessible(true)"
+
+#4. create object of the load class by using "newInstance()"
+#5. type cast the object
+#6. set the object with new object
+#7. access any private fild
+
+
+
+
+
+sample code
+================================================================================
+package Payment;
+
+import java.lang.reflect.Field;
+
+public class TestPayment {
+    public static void main(String[] args) throws Exception{
+        BkashPay bkashPay = new BkashPay();
+
+       Class<?> cls = Class.forName("Payment.PaymentReceiver");
+       Field paymentField = cls.getDeclaredField("payment");
+       paymentField.setAccessible(true);
+
+       Object obj = cls.newInstance();
+       PaymentReceiver receiver = (PaymentReceiver) obj;
+       paymentField.set(obj, bkashPay);
+       receiver.pay(300);
+
+    }
+}
+
+
+
+
+
+
+trying to access
+=================================================================================
+package Payment;
+
+public class PaymentReceiver {
+    private Ipayment payment;
+    // no args constructor
+    public PaymentReceiver(){super();}
+    // all args constructor
+    public PaymentReceiver(Ipayment payment){this.payment=payment;}
+
+    // setter method for instance variable(payment)
+    public void setPayment(Ipayment payment){
+        this.payment = payment;
+    }
+    //normal method
+    public void pay(double amount){
+        payment.pay(amount);
+    }
+}
+
+
+
+
+
+
+
+Ipayment Inteface
+==============================================================================
+
+package Payment;
+
+public interface Ipayment {
+    void pay( double amount);
+}
+
+
+
+
+
+
+
+Payment Implementation class
+=====================================================================================
+
+package Payment;
+
+public class BkashPay implements Ipayment{
+    @Override
+    public void pay(double amount) {
+        System.out.println("You paid "+ amount+ " successfully through Bkash Pay");
+    }
+}
