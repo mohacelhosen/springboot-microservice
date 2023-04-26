@@ -7,7 +7,8 @@
     <bean id="debitCard" class="payment.DebitCard" />
     <bean id="bkash" class="payment.BKash" />
     <bean id="paymentReceiver" class="payment.PaymentReceiver">
-        <property name="payment" ref="creditCard"/>
+        <property name="payment" ref="bkash"/>
+        <constructor-arg ref="creditCard" name="payment"/>
     </bean>
 
 </beans>

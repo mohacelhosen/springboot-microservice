@@ -6,11 +6,11 @@ public class PaymentReceiver {
         System.out.println("Setter::Injection");
     }
     public PaymentReceiver (){
-        System.out.println("No-args::Constructor");
+        System.out.println("No-args:: PaymentReceiver Constructor");
     }
     public PaymentReceiver(IPayment payment) {
         this.payment = payment;
-        System.out.println("Args::Constructor");
+        System.out.println("Args:: PaymentReceiver Constructor");
     }
     public void collectPayment(Double amount){
         payment.pay(amount);
